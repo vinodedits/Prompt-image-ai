@@ -1,1 +1,515 @@
+prompt-image-ai
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Prompt Image AI</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#080812;
+color:white;
+}
+
+header{
+padding:20px;
+border-bottom:1px solid #29293a;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+background:#080812ee;
+z-index:10;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+}
+
+.logo span{
+color:#9b6cff;
+}
+
+.hero{
+text-align:center;
+padding:65px 20px 45px;
+background:radial-gradient(circle at top,#44258a55,transparent 55%);
+}
+
+.hero h1{
+font-size:48px;
+margin:10px 0;
+}
+
+.hero h1 span{
+color:#9b6cff;
+}
+
+.hero p{
+color:#aaa;
+max-width:650px;
+margin:15px auto 28px;
+line-height:1.6;
+}
+
+.search{
+width:100%;
+max-width:650px;
+padding:17px 20px;
+border-radius:13px;
+border:1px solid #343445;
+background:#151520;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.container{
+max-width:1150px;
+margin:auto;
+padding:20px;
+}
+
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px 0 20px;
+}
+
+.category{
+white-space:nowrap;
+padding:10px 15px;
+border-radius:30px;
+border:1px solid #333344;
+background:#151520;
+color:#ccc;
+cursor:pointer;
+}
+
+.category.active,
+.category:hover{
+background:#9b6cff;
+color:white;
+border-color:#9b6cff;
+}
+
+.title{
+margin:20px 0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+gap:18px;
+}
+
+.card{
+background:#14141f;
+border:1px solid #29293a;
+border-radius:17px;
+padding:20px;
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+border-color:#7050b8;
+}
+
+.tag{
+font-size:11px;
+font-weight:bold;
+color:#a982ff;
+letter-spacing:1px;
+}
+
+.card h3{
+margin:10px 0;
+font-size:20px;
+}
+
+.card p{
+color:#aaa;
+font-size:14px;
+line-height:1.6;
+min-height:125px;
+}
+
+.copy{
+width:100%;
+padding:12px;
+border:0;
+border-radius:10px;
+background:#9b6cff;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.copy:hover{
+background:#7d51e8;
+}
+
+.noresult{
+text-align:center;
+color:#aaa;
+padding:50px;
+}
+
+footer{
+text-align:center;
+padding:50px 20px;
+margin-top:50px;
+border-top:1px solid #29293a;
+color:#777;
+}
+
+@media(max-width:600px){
+
+.hero h1{
+font-size:38px;
+}
+
+.logo{
+font-size:20px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+Prompt<span>Image</span> AI
+</div>
+
+</header>
+
+
+<div class="hero">
+
+<h1>Create <span>Amazing Images</span></h1>
+
+<p>
+Discover powerful AI image prompts for portraits,
+cinematic scenes, devotional art, Ghibli, gaming,
+fashion and viral Instagram images.
+</p>
+
+<input
+id="search"
+class="search"
+type="search"
+placeholder="🔍 Search prompts..."
+>
+
+</div>
+
+
+<div class="container">
+
+<div class="categories" id="categories"></div>
+
+<h2 class="title">🔥 Popular AI Prompts</h2>
+
+<div class="grid" id="grid"></div>
+
+</div>
+
+
+<footer>
+
+<strong>Prompt Image AI</strong>
+
+<p>
+AI Image Prompts for Creators © 2026
+</p>
+
+</footer>
+
+
+<script>
+
+const prompts = [
+
+{
+category:"God / Devotional",
+title:"Lord Shiva",
+text:"Ultra-realistic cinematic portrait of Lord Shiva as a cosmic protector, glowing eyes, crescent moon, sacred snake, Rudraksha malas, dramatic celestial storm, divine atmosphere, highly detailed, photorealistic, 8K, vertical 9:16."
+},
+
+{
+category:"God / Devotional",
+title:"Lord Ganesha",
+text:"Majestic Lord Ganesha seated in a beautiful divine temple, golden ornaments, glowing aura, floating flower petals, cinematic lighting, magical atmosphere, ultra detailed, photorealistic, 8K, vertical 9:16."
+},
+
+{
+category:"God / Devotional",
+title:"Radha Krishna",
+text:"Divine Radha Krishna standing together in a magical Vrindavan garden, glowing spiritual aura, beautiful flowers, soft golden light, peacock feathers, cinematic depth of field, ultra detailed, devotional atmosphere, 8K, 9:16."
+},
+
+{
+category:"Realistic Portrait",
+title:"Premium Portrait",
+text:"Photorealistic close-up portrait, confident expression, natural realistic skin texture, detailed eyes, authentic facial proportions, dramatic studio lighting, shallow depth of field, DSLR photography, 85mm lens, ultra detailed, 8K, vertical 9:16."
+},
+
+{
+category:"Realistic Portrait",
+title:"Rain Portrait",
+text:"Ultra-realistic portrait of a young Indian man standing in heavy rain at night, wet hair, realistic skin texture, cinematic blue and warm lighting, dramatic shadows, shallow depth of field, DSLR photography, 8K, 9:16."
+},
+
+{
+category:"Cinematic",
+title:"Epic Movie Scene",
+text:"Epic cinematic movie scene with dramatic lighting, atmospheric fog, powerful subject in the center, realistic environment, volumetric light rays, detailed textures, film grain, Hollywood movie still, ultra realistic, 8K, vertical 9:16."
+},
+
+{
+category:"Cinematic",
+title:"Storm Ocean",
+text:"Massive ocean waves under a dark stormy sky, dramatic lightning, glowing light through clouds, mist over the water, realistic reflections, cinematic atmosphere, epic scale, ultra detailed, 8K, vertical 9:16."
+},
+
+{
+category:"Ghibli / Anime",
+title:"Beautiful Village",
+text:"Beautiful 2D animated Indian village, peaceful houses, green fields, warm sunrise, children walking on a small path, colorful flowers, soft clouds, magical storybook atmosphere, detailed background, Ghibli-inspired aesthetic, 9:16."
+},
+
+{
+category:"Ghibli / Anime",
+title:"Rainy Ghibli Scene",
+text:"Charming 2D animated village during monsoon rain, small houses, green trees, puddles reflecting the sky, warm window lights, cute characters, emotional atmosphere, hand-painted background, Ghibli-inspired style, 9:16."
+},
+
+{
+category:"Gaming",
+title:"Epic Gaming Poster",
+text:"Cinematic gaming character standing in a powerful victory pose, dramatic rain, glowing weapon, flying particles, intense rim lighting, huge atmospheric background, premium gaming poster composition, ultra detailed, 8K, vertical 9:16."
+},
+
+{
+category:"Gaming",
+title:"Battle Warrior",
+text:"Fierce futuristic warrior standing on a battlefield, glowing armor, dramatic smoke, sparks flying, powerful cinematic lighting, epic gaming poster, sharp details, realistic textures, ultra detailed, 8K, 9:16."
+},
+
+{
+category:"Instagram Viral",
+title:"Viral Cinematic Photo",
+text:"Trending Instagram viral cinematic portrait, stylish subject, dramatic lighting, luxury atmosphere, realistic skin texture, shallow depth of field, premium DSLR photography, high contrast, ultra realistic, 8K, vertical 9:16."
+},
+
+{
+category:"Indian / Patriotic",
+title:"Indian Tricolour Portrait",
+text:"Photorealistic cinematic portrait using the reference face as an exact identity reference, preserve facial features, face shape, skin tone, hairstyle and beard, naturally wrapped in the Indian tricolour flag, realistic fabric folds, dramatic warm lighting, realistic skin texture, no face distortion, 8K, 9:16."
+},
+
+{
+category:"Couple / Love",
+title:"Romantic Couple",
+text:"Beautiful young Indian couple standing together during golden hour, natural expressions, romantic atmosphere, soft sunlight, realistic skin texture, cinematic depth of field, dreamy background, premium photography, ultra realistic, 8K, vertical 9:16."
+},
+
+{
+category:"Nature / Landscape",
+title:"Mountain Paradise",
+text:"Majestic green mountains, crystal clear river, beautiful flowers, golden sunrise, soft morning mist, dramatic clouds, realistic natural textures, cinematic landscape photography, ultra detailed, 8K, vertical 9:16."
+},
+
+{
+category:"Luxury / Lifestyle",
+title:"Luxury Lifestyle",
+text:"Stylish young man standing beside a luxury sports car in a modern city at night, premium suit, cinematic city lights, reflections, dramatic lighting, luxury lifestyle photography, ultra realistic, 8K, vertical 9:16."
+},
+
+{
+category:"Fashion",
+title:"Fashion Photoshoot",
+text:"High-end fashion photoshoot, stylish Indian model wearing premium modern clothing, confident pose, studio lighting, realistic skin texture, editorial photography, luxury fashion magazine aesthetic, ultra detailed, 8K, vertical 9:16."
+},
+
+{
+category:"Fantasy / Mythology",
+title:"Fantasy Warrior",
+text:"Epic mythological warrior standing in an ancient magical kingdom, glowing armor, giant mountains, mystical clouds, magical particles, dramatic cinematic lighting, fantasy movie poster, ultra detailed, photorealistic, 8K, 9:16."
+}
+
+];
+
+
+const categories = [
+"All",
+"God / Devotional",
+"Realistic Portrait",
+"Cinematic",
+"Ghibli / Anime",
+"Gaming",
+"Instagram Viral",
+"Indian / Patriotic",
+"Couple / Love",
+"Nature / Landscape",
+"Luxury / Lifestyle",
+"Fashion",
+"Fantasy / Mythology"
+];
+
+
+let activeCategory = "All";
+
+
+const categoryBox =
+document.getElementById("categories");
+
+const grid =
+document.getElementById("grid");
+
+const search =
+document.getElementById("search");
+
+
+categories.forEach(category => {
+
+const button =
+document.createElement("button");
+
+button.className = "category";
+
+button.innerText = category;
+
+if(category === "All"){
+button.classList.add("active");
+}
+
+button.onclick = () => {
+
+activeCategory = category;
+
+document
+.querySelectorAll(".category")
+.forEach(b => b.classList.remove("active"));
+
+button.classList.add("active");
+
+showPrompts();
+
+};
+
+categoryBox.appendChild(button);
+
+});
+
+
+function showPrompts(){
+
+const keyword =
+search.value.toLowerCase();
+
+const filtered =
+prompts.filter(prompt => {
+
+const categoryMatch =
+activeCategory === "All" ||
+prompt.category === activeCategory;
+
+const searchMatch =
+(prompt.title + " " + prompt.text + " " + prompt.category)
+.toLowerCase()
+.includes(keyword);
+
+return categoryMatch && searchMatch;
+
+});
+
+
+grid.innerHTML = "";
+
+
+if(filtered.length === 0){
+
+grid.innerHTML =
+'<div class="noresult">😔 No prompts found</div>';
+
+return;
+
+}
+
+
+filtered.forEach(prompt => {
+
+const card =
+document.createElement("div");
+
+card.className = "card";
+
+card.innerHTML = `
+
+<div class="tag">
+${prompt.category}
+</div>
+
+<h3>
+${prompt.title}
+</h3>
+
+<p>
+${prompt.text}
+</p>
+
+<button class="copy">
+📋 Copy Prompt
+</button>
+
+`;
+
+card
+.querySelector(".copy")
+.onclick = function(){
+
+navigator.clipboard.writeText(prompt.text);
+
+this.innerText = "Copied ✓";
+
+setTimeout(() => {
+
+this.innerText = "📋 Copy Prompt";
+
+},1500);
+
+};
+
+grid.appendChild(card);
+
+});
+
+}
+
+
+search.addEventListener("input", showPrompts);
+
+
+showPrompts();
+
+</script>
+
+</body>
+</html>
