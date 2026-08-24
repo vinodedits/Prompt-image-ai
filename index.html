@@ -1,1 +1,93 @@
 # Prompt-image-ai
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Image AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080812;color:white;font-family:Arial,sans-serif}
+header{padding:22px;text-align:center;border-bottom:1px solid #29293a}
+.logo{font-size:26px;font-weight:bold}
+.logo span{color:#9b6cff}
+.hero{text-align:center;padding:70px 20px}
+.hero h1{font-size:48px;margin:10px 0}
+.hero h1 span{color:#9b6cff}
+.hero p{color:#aaa;max-width:600px;margin:15px auto 30px;line-height:1.6}
+.search{max-width:650px;margin:auto;padding:16px 20px;border-radius:12px;border:1px solid #333;background:#151520;color:white;font-size:16px}
+section{max-width:1100px;margin:auto;padding:20px}
+h2{margin-top:35px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:#14141f;border:1px solid #29293a;border-radius:16px;padding:20px}
+.tag{color:#a982ff;font-size:12px;font-weight:bold}
+.card h3{margin:10px 0}
+.card p{color:#aaa;line-height:1.5;font-size:14px}
+button{width:100%;padding:12px;border:0;border-radius:10px;background:#9b6cff;color:white;font-weight:bold;cursor:pointer}
+footer{text-align:center;color:#777;padding:50px 20px}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Prompt<span>Image</span> AI</div>
+</header>
+
+<div class="hero">
+<h1>Create <span>Amazing Images</span></h1>
+<p>Discover powerful AI image prompts for cinematic portraits, devotional art, Ghibli scenes, gaming and more.</p>
+<input class="search" placeholder="🔍 Search AI prompts...">
+</div>
+
+<section>
+<h2>🔥 Popular AI Prompts</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="tag">DEVOTIONAL</div>
+<h3>Lord Shiva</h3>
+<p>Ultra-realistic cinematic portrait of Lord Shiva as a cosmic protector, glowing eyes, crescent moon, sacred snake, Rudraksha malas, dramatic celestial storm, divine atmosphere, highly detailed, 8K, vertical 9:16.</p>
+<button onclick="copyPrompt(this)">Copy Prompt</button>
+</div>
+
+<div class="card">
+<div class="tag">PORTRAIT</div>
+<h3>Cinematic Portrait</h3>
+<p>Photorealistic cinematic portrait, confident expression, realistic skin texture, detailed eyes, dramatic lighting, shallow depth of field, DSLR photography, 85mm lens, ultra-detailed, 8K, vertical 9:16.</p>
+<button onclick="copyPrompt(this)">Copy Prompt</button>
+</div>
+
+<div class="card">
+<div class="tag">GHIBLI</div>
+<h3>Beautiful Village</h3>
+<p>Beautiful 2D animated village scene, peaceful Indian village, green fields, small houses, warm sunrise, children walking along a dirt path, magical storybook atmosphere, detailed background, Ghibli-inspired style, 9:16.</p>
+<button onclick="copyPrompt(this)">Copy Prompt</button>
+</div>
+
+<div class="card">
+<div class="tag">GAMING</div>
+<h3>Epic Gaming Poster</h3>
+<p>Cinematic gaming character standing in a powerful victory pose, dramatic rain, glowing weapon, flying particles, intense rim lighting, atmospheric background, premium gaming poster, ultra-detailed, 8K, 9:16.</p>
+<button onclick="copyPrompt(this)">Copy Prompt</button>
+</div>
+
+</div>
+</section>
+
+<footer>
+Prompt Image AI © 2026
+</footer>
+
+<script>
+function copyPrompt(button){
+let text=button.previousElementSibling.innerText;
+navigator.clipboard.writeText(text);
+button.innerText="Copied ✓";
+setTimeout(()=>button.innerText="Copy Prompt",1500);
+}
+</script>
+
+</body>
+</html>
